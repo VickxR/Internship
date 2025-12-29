@@ -47,7 +47,7 @@ def register():
     finally:
         conn.close()
 
-    return "<h2>Registration Successful</h2><a href='/certificate'>Download Certificate</a>"
+    return "<h2>Registration Successful</h2>"
 
 # ---------------- CERTIFICATE PAGE ----------------
 @app.route('/certificate', methods=['GET', 'POST'])
