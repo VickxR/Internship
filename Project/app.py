@@ -143,7 +143,7 @@ def certificate():
 
         pdf.setFont("Times-Roman", 14)
         pdf.drawCentredString(width/2, height-480,
-            f"conducted by {college}")
+            f"Conducted by {college}")
 
         # Footer
         pdf.setFont("Times-Roman", 12)
