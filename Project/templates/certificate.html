@@ -1,17 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Download Certificate</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #c31432, #240b36);
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            background: linear-gradient(135deg, #c31432, #240b36);
+            width: 380px;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #ffffff;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        label {
+            color: #ffffff;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            background: linear-gradient(135deg, #0072ff, #00c6ff);
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 114, 255, 0.4);
+        }
+
+        .footer-text {
+            margin-top: 18px;
+            font-size: 12px;
+            color: #f1f1f1;
+        }
+    </style>
 </head>
-<body style="text-align:center; font-family:Arial">
 
-<h2>Download Certificate</h2>
+<body>
 
-<form method="POST">
-    <label>Registered Email:</label><br><br>
-    <input type="email" name="email" required><br><br>
-    <button type="submit">Download Certificates</button>
-</form>
+<div class="container">
+    <h2>Download Certificate</h2>
+
+    <form method="POST">
+        <label>Registered Email</label>
+        <input type="email" name="email" placeholder="Enter your registered email" required>
+        <button type="submit">Download Certificates</button>
+    </form>
+
+    <div class="footer-text">
+        Rajalakshmi Engineering College • Certificate Portal
+    </div>
+</div>
 
 </body>
 </html>

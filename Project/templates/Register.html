@@ -1,38 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Event Registration - REC</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 
     <style>
         body {
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            font-family: 'Times New Roman', Times, serif;
+            background: linear-gradient(135deg, #c31432, #240b36);
+            font-family: 'Poppins', sans-serif;
         }
 
         .container {
-            border: 2px solid red;
-            padding: 30px;
-            width: 400px;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #c31432, #240b36);
+            width: 420px;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h1 {
             text-align: center;
+            margin-bottom: 25px;
+            color: #ffffff;
+            letter-spacing: 1px;
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
         }
 
-        input, select, button {
+        label {
+            font-weight: 500;
+            margin-bottom: 6px;
+            display: block;
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        input, select {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .register-btn {
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            color: white;
+            margin-top: 10px;
+        }
+
+        hr {
+            margin: 25px 0;
+            border: none;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.4);
         }
 
         .certificate-btn {
-            background-color: blue;
+            background: linear-gradient(135deg, #0072ff, #00c6ff);
             color: white;
-            border: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #f1f1f1;
+            font-family: 'Dancing Script', cursive;
         }
     </style>
 </head>
@@ -44,21 +127,21 @@
 
     <form method="POST" action="/register">
 
-        <label>Name:</label>
-        <input type="text" name="name" placeholder="Enter your name" required>
+        <label>Name</label>
+        <input type="text" name="name" placeholder="Enter your full name" required>
 
-        <label>Phone Number:</label>
+        <label>Phone Number</label>
         <input type="text" name="phone" placeholder="Enter your phone number" required>
 
-        <label>Email ID:</label>
-        <input type="email" name="email" placeholder="Enter your Email ID" required>
+        <label>Email ID</label>
+        <input type="email" name="email" placeholder="Enter your email address" required>
 
-        <label>College Name:</label>
+        <label>College Name</label>
         <input type="text" name="college" placeholder="Enter your college name" required>
 
-        <label>Technical Event:</label>
+        <label>Technical Event</label>
         <select name="technical_event" required>
-            <option value="">Select</option>
+            <option value="">Select an option</option>
             <option>Not Interested</option>
             <option>Paper Presentation</option>
             <option>Hackathon</option>
@@ -66,9 +149,9 @@
             <option>Debugging Challenge</option>
         </select>
 
-        <label>Non-Technical Event:</label>
+        <label>Non-Technical Event</label>
         <select name="non_technical_event" required>
-            <option value="">Select</option>
+            <option value="">Select an option</option>
             <option>Not Interested</option>
             <option>Photography</option>
             <option>Quiz</option>
@@ -76,16 +159,18 @@
             <option>Connections</option>
         </select>
 
-        <button type="submit">Register</button>
+        <button type="submit" class="register-btn">Register</button>
     </form>
 
     <hr>
 
     <a href="/certificate">
-        <button type="button" class="certificate-btn">
-            Download Certificate
-        </button>
+        <button type="button" class="certificate-btn">Download Certificate</button>
     </a>
+
+    <div class="footer-text">
+        Rajalakshmi Engineering College • Event Portal
+    </div>
 </div>
 
 </body>
