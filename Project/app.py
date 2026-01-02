@@ -13,7 +13,7 @@ def get_db_connection():
     return pymysql.connect(
         host="localhost",
         user="root",
-        password="Vicky@3016",
+        password=os.environ.get("DB_PASS"),
         database="flask_db"
     )
 
