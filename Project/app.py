@@ -45,8 +45,12 @@ def register():
 
     if already_exists:
         conn.close()
-        return "<h2>You're already registered</h2>"
-
+        return """
+            <script>
+                alert("You're already registered");
+                window.location.href = "/";
+            </script>
+        """
     # 🔹 INSERT IF NOT EXISTS
     cursor.execute("""
         INSERT INTO event_registrations
@@ -71,7 +75,7 @@ def certificate():
     cursor = conn.cursor()
     cursor.execute("""
         SELECT name, college, technical_event, non_technical_event
-        FROM event_registrations WHERE email=%s
+        FROM event_registrations WHERE email=%s 
     """, (email,))
     data = cursor.fetchone()
     conn.close()
