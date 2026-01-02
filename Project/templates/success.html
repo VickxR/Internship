@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Successful 🎉</title>
+
+    <!-- Google Fonts (same as other pages) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Playfair+Display:wght@600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #c31432, #240b36);
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+        }
+
+        .container {
+            background: linear-gradient(135deg, #c31432, #240b36);
+            width: 420px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            text-align: center;
+            z-index: 10;
+            animation: popIn 0.8s ease-out;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            color: #ffffff;
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #f5f5f5;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .celebrate {
+            font-family: 'Dancing Script', cursive;
+            font-size: 26px;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .home-btn {
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 🎉 CONFETTI EMOJI SHOWER */
+        .confetti {
+            position: absolute;
+            top: -10px;
+            font-size: 24px;
+            animation: fall linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 🔥 FIREWORK BURSTS */
+        .firework {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: transparent;
+            border-radius: 50%;
+            box-shadow:
+                0 0 #ffd700,
+                0 0 #ff5733,
+                0 0 #00c6ff,
+                0 0 #ffffff;
+            animation: explode 1.5s ease-out infinite;
+        }
+
+        @keyframes explode {
+            0% {
+                box-shadow:
+                    0 0 #ffd700,
+                    0 0 #ff5733,
+                    0 0 #00c6ff,
+                    0 0 #ffffff;
+            }
+            100% {
+                box-shadow:
+                    80px -80px #ffd700,
+                    -80px -60px #ff5733,
+                    60px 80px #00c6ff,
+                    -60px 60px #ffffff;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 🔥 Fireworks -->
+<div class="firework" style="top:20%; left:30%;"></div>
+<div class="firework" style="top:30%; left:70%;"></div>
+<div class="firework" style="top:15%; left:50%;"></div>
+
+<div class="container">
+    <div class="celebrate">🎉 Congratulations! 🎉</div>
+    <h1>Registration Successful</h1>
+    <p>You have successfully registered for the event.<br>
+       We’re excited to have you with us!</p>
+
+    <a href="/">
+        <button class="home-btn">Go Back to Home</button>
+    </a>
+</div>
+
+<script>
+    // 🎉 Emoji Shower Generator
+    const emojis = ["🎉", "✨", "🎊", "💥"];
+
+    function createConfetti() {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 5000);
+    }
+
+    setInterval(createConfetti, 250);
+</script>
+
+</body>
+</html>
