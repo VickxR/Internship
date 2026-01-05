@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+
+    <style>
+    body {
+        margin: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #A8EDEA, #FED6E3);
+        font-family: 'Poppins', sans-serif;
+        color: #355C7D;
+    }
+
+    .container {
+        width: 90vw;              
+        max-width: 1200px;        
+        height: 85vh;             
+        padding: 30px;
+        margin: 40px auto;
+        background: linear-gradient(
+            135deg,
+            rgba(168, 237, 234, 0.9),
+            rgba(254, 214, 227, 0.9)
+        );
+        border-radius: 18px;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        overflow: auto; 
+        backdrop-filter: blur(6px);
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #355C7D;
+        letter-spacing: 1px;
+        font-family: 'Playfair Display', serif;
+        font-size: 32px;
+        position: sticky;
+        top: 0;
+        background: rgba(168, 237, 234, 0.95);
+        padding: 10px 0;
+        z-index: 10;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        border: 1px solid rgba(53, 92, 125, 0.3);
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        background: rgba(255, 255, 255, 0.55);
+        color: #3A4F7A;
+        outline: none;
+    }
+
+    input::placeholder {
+        color: #7A9E9F;
+    }
+
+    input:focus {
+        border-color: #A8EDEA;
+        box-shadow: 0 0 0 3px rgba(168, 237, 234, 0.4);
+    }
+</style>
+
+</head>
+<body>
+<div class="container">
+<h2>Registered Users</h2>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+    </tr>
+    {% for u in users %}
+    <tr>
+        <td>{{ u[0] }}</td>
+        <td>{{ u[1] }}</td>
+        <td>{{ u[2] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br><br>
+
+<h2>Event Registrations</h2>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>College</th>
+        <th>Technical Event</th>
+        <th>Non-Technical Event</th>
+    </tr>
+    {% for r in registrations %}
+    <tr>
+        <td>{{ r[0] }}</td>
+        <td>{{ r[1] }}</td>
+        <td>{{ r[2] }}</td>
+        <td>{{ r[3] }}</td>
+        <td>{{ r[4] }}</td>
+        <td>{{ r[5] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+</body>
+</html>

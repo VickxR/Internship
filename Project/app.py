@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, session
 import pymysql
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.pdfgen import canvas
@@ -7,22 +7,114 @@ import io
 import os
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("Flask_secret_key")
 
-# ---------------- DB CONNECTION ----------------
 def get_db_connection():
     return pymysql.connect(
         host="localhost",
         user="root",
-        password=os.environ.get("DB_PASSWORD"),
-        database="flaskdb"
+        password=os.environ.get("DB_PASS"),
+        database="flask_db"
     )
 
-# ---------------- HOME ----------------
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'GET':
+        return render_template('signup.html')
+
+    name = request.form['name']
+    email = request.form['email']
+    phone = request.form['phone']
+    password = request.form['password']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("""
+            INSERT INTO users (name, email, phone, password)
+            VALUES (%s, %s, %s, %s)
+        """, (name, email, phone, password))
+        conn.commit()
+        return render_template('signin.html')
+
+    except pymysql.err.IntegrityError:
+        return "<h3>User already exists</h3>"
+
+    finally:
+        conn.close()
+
+@app.route('/signin', methods=['GET', 'POST'])
+def signin():
+    if request.method == 'GET':
+        return render_template('signin.html')
+    
+    email = request.form['email']
+    password = request.form['password']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT id FROM users WHERE email=%s AND password=%s
+    """, (email, password))
+
+    user = cursor.fetchone()
+    conn.close()
+
+    if user:
+        session["user_id"] = user[0]
+        return render_template('register.html')
+    else:
+        return "<h3>Invalid email or password</h3>"
+
+@app.route('/admin', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'GET':
+        return render_template('admin.html')
+
+    email = request.form['email']
+    password = request.form['password']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT id FROM admin WHERE email=%s AND password=%s
+    """, (email, password))
+
+    admin = cursor.fetchone()
+
+    if not admin:
+        conn.close()
+        return "<h3>Invalid admin credentials</h3>"
+
+    
+    cursor.execute("SELECT name, email, phone FROM users")
+    users = cursor.fetchall()
+
+
+    cursor.execute("""
+        SELECT name, phone, email, college,
+               technical_event, non_technical_event
+        FROM event_registrations
+    """)
+    registrations = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        'admin_dashboard.html',
+        users=users,
+        registrations=registrations
+    )
+
+
 @app.route('/')
 def home():
-    return render_template('register.html')
+    return render_template('signin.html')
 
-# ---------------- REGISTER (FIXED LOGIC) ----------------
+
 @app.route('/register', methods=['POST'])
 def register():
     name = request.form['name']
@@ -35,15 +127,12 @@ def register():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # 🔹 CHECK DUPLICATE (PHONE OR EMAIL)
     cursor.execute("""
         SELECT 1 FROM event_registrations
         WHERE email = %s OR phone = %s
     """, (email, phone))
 
-    already_exists = cursor.fetchone()
-
-    if already_exists:
+    if cursor.fetchone():
         conn.close()
         return """
             <script>
@@ -51,7 +140,7 @@ def register():
                 window.location.href = "/";
             </script>
         """
-    # 🔹 INSERT IF NOT EXISTS
+
     cursor.execute("""
         INSERT INTO event_registrations
         (phone, name, email, college, technical_event, non_technical_event)
@@ -63,7 +152,7 @@ def register():
 
     return render_template("success.html")
 
-# ---------------- CERTIFICATE PAGE ----------------
+
 @app.route('/certificate', methods=['GET', 'POST'])
 def certificate():
     if request.method == 'GET':
@@ -75,7 +164,7 @@ def certificate():
     cursor = conn.cursor()
     cursor.execute("""
         SELECT name, college, technical_event, non_technical_event
-        FROM event_registrations WHERE email=%s 
+        FROM event_registrations WHERE email=%s
     """, (email,))
     data = cursor.fetchone()
     conn.close()
@@ -109,15 +198,22 @@ def certificate():
         pdf.drawCentredString(width / 2, height - 150,
                               "(An Autonomous Institution)")
 
-        naac_logo = os.path.join(app.root_path, "static", "naac.jpg")
+        naac_logo = os.path.join(app.root_path, "static", "naac.png")
         aicte_logo = os.path.join(app.root_path, "static", "AICTE-logo.jpg")
+        sign1 = os.path.join(app.root_path, "static", "sign 1.png")
+        sign2 = os.path.join(app.root_path, "static", "sign 2.png")
 
         pdf.drawImage(naac_logo, width - 200, height - 180,
                       width=100, height=80, mask='auto')
 
         pdf.drawImage(aicte_logo, 80, height - 180,
                       width=80, height=80, mask='auto')
-
+        
+        pdf.drawImage(sign1, 80, (height/2)/2,
+                      width=80, height=80, mask='auto')
+        
+        pdf.drawImage(sign2, width-200, (height/2)/2,
+                      width=80, height=80, mask='auto')
         pdf.setFont("Times-Bold", 28)
         pdf.drawCentredString(width / 2, height - 260,
                               "CERTIFICATE OF PARTICIPATION")
@@ -142,7 +238,7 @@ def certificate():
 
         pdf.setFont("Times-Roman", 12)
         pdf.drawString(80, 140, "Program Coordinator")
-        pdf.drawString(width - 250, 140, "Head of the Institution")
+        pdf.drawString(width - 200, 140, "Head of the Institution")
 
         pdf.showPage()
 

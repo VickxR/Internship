@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign In</title>
+
+    <style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #A8EDEA, #FED6E3);
+        font-family: 'Poppins', sans-serif;
+        color: #355C7D;
+    }
+
+    .container {
+        background: linear-gradient(
+            135deg,
+            rgba(168, 237, 234, 0.9),
+            rgba(254, 214, 227, 0.9)
+        );
+        width: 420px;
+        padding: 35px;
+        border-radius: 18px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        animation: fadeIn 0.8s ease-in-out;
+        backdrop-filter: blur(6px);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #355C7D;
+        letter-spacing: 1px;
+        font-family: 'Playfair Display', serif;
+        font-size: 30px;
+    }
+
+    input {
+        width: 96%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        border: 1px solid rgba(53, 92, 125, 0.3);
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        background: rgba(255, 255, 255, 0.55);
+        color: #3A4F7A;
+        outline: none;
+    }
+
+    input::placeholder {
+        color: #7A9E9F;
+    }
+
+    input:focus {
+        border-color: #A8EDEA;
+        box-shadow: 0 0 0 3px rgba(168, 237, 234, 0.4);
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: none;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #FED6E3, #A8EDEA);
+        color: #355C7D;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    p {
+        text-align: center;
+        margin-top: 18px;
+        color: #355C7D;
+        font-size: 14px;
+    }
+
+    a {
+        display: block;
+        text-align: center;
+        margin-top: 8px;
+        color: #5F7ADB;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    a:hover {
+        color: #A8EDEA;
+    }
+</style>
+
+</head>
+<body>
+    <div class="container">
+    <h2>Sign In</h2>
+
+    <form method="POST" action="/signin">
+        <input type="email" name="email" placeholder="Email" required><br><br>
+        <input type="password" name="password" placeholder="Password" required><br><br>
+        <button type="submit">Sign In</button>
+    </form>
+
+    <p>New user? <a href="/signup">Sign Up</a></p>
+    <a href="/admin">Admin Login</a>
+    </div>
+</body>
+</html>
