@@ -77,9 +77,9 @@
             font-weight: 600;
             border-radius: 10px;
             cursor: pointer;
-            border: none;
-            background: linear-gradient(135deg, #0072ff, #00c6ff);
-            color: white;
+            border: 1px solid rgba(22, 21, 21, 0.3);
+            background: linear-gradient(135deg, #A8EDEA, #FED6E3);
+            color: #7A9E9F;
             transition: transform 0.2s, box-shadow 0.2s;
             font-family: 'Poppins', sans-serif;
         }
@@ -101,15 +101,15 @@
 <body>
 
 <div class="container">
-    <h2>Download Certificate</h2>
+    <h2 style="color:#7A9E9F;">Download Certificate</h2>
 
     <form method="POST">
-        <label>Registered Email</label>
+        <label style="color:#7A9E9F;">Registered Email</label>
         <input type="email" name="email" placeholder="Enter your registered email" required>
         <button type="submit">Download Certificates</button>
     </form>
 
-    <div class="footer-text">
+    <div class="footer-text" style="color:#7A9E9F;">
         Rajalakshmi Engineering College • Certificate Portal
     </div>
 </div>
