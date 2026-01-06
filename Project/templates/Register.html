@@ -75,6 +75,20 @@
             font-size: 14px;
             font-family: 'Poppins', sans-serif;
         }
+        .Logout {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .Logout a {
+            text-decoration: none;
+            color: #355C7D;
+            font-weight: 600;
+            border: 2px solid #355C7D;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: background 0.3s, color 0.3s;
+        }
 
         input:focus, select:focus {
             outline: none;
@@ -140,6 +154,10 @@
 <body>
 
 <div class="container">
+    <div class="Logout">
+        <a href="{{ url_for('Logout') }}">Logout</a>
+    </div>
+
     <h1 style="color: #355C7D;">Event Registration</h1>
 
     <form method="POST" action="/register">
