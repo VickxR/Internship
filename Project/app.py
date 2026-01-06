@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file, session
+from flask import Flask, render_template, request, send_file, session, url_for, redirect
 import pymysql
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.pdfgen import canvas
@@ -95,11 +95,12 @@ def admin_login():
 
 
     cursor.execute("""
-        SELECT name, phone, email, college,
-               technical_event, non_technical_event
+        SELECT id, name, phone, email, college,
+            technical_event, non_technical_event
         FROM event_registrations
     """)
     registrations = cursor.fetchall()
+
 
     conn.close()
 
@@ -179,7 +180,7 @@ def certificate():
     width, height = landscape(A4)
 
     def draw_certificate(event_name):
-        pdf.setFillColorRGB(1.0, 0.95, 0.8)   # light gold
+        pdf.setFillColorRGB(1.0, 0.95, 0.8)  
         pdf.rect(0, 0, width, height, fill=1, stroke=0)
         pdf.setFillColor(colors.black)
 
@@ -189,7 +190,7 @@ def certificate():
         pdf.setLineWidth(1)
         pdf.rect(45, 45, width - 90, height - 90)
 
-        # Header
+        
         pdf.setFont("Times-Bold", 20)
         pdf.drawCentredString(width / 2, height - 120,
                               "RAJALAKSHMI ENGINEERING COLLEGE")
@@ -257,6 +258,16 @@ def certificate():
         download_name="Certificates.pdf",
         mimetype="application/pdf"
     )
+
+@app.route('/Logout')
+def Logout():
+    session.clear()
+    return redirect(url_for('signin'))
+
+@app.route('/Back')
+def Back():
+    session.clear()
+    return redirect(url_for('signin'))
 
 if __name__ == '__main__':
     app.run(debug=True)
