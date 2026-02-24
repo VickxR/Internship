@@ -23,7 +23,7 @@ def get_db_connection():
     )
 
 def admin_required():
-    return session.get('role') == 'organizer', 'admin'
+    return session.get('role') in ['organizer', 'admin', 'hod']
 
 # ---------------- HOME (UPDATED) ----------------
 @app.route('/')
@@ -38,7 +38,7 @@ def about():
 @app.route('/domains')
 def domains():
     conn = get_db_connection()
-    cursor = conn.cursor(DictCursor)
+    cursor = conn.cursor()
 
     cursor.execute("""SELECT name,description, start_date, end_date,
                    event_time, venue, entry_fee, team_capacity
@@ -99,17 +99,19 @@ def signin():
 
     conn = get_db_connection()
     cursor = conn.cursor()
+
     cursor.execute("SELECT id, password, role FROM users WHERE email=%s", (email,))
     user = cursor.fetchone()
     conn.close()
 
-    if user and bcrypt.check_password_hash(user[1], password):
-        session['user_id'] = user[0]
-        session['role'] = user[2]
+    if user and bcrypt.check_password_hash(user['password'], password):
 
-        if user[2] in ['organizer', 'admin', 'hod']:
+        session['user_id'] = user['id']
+        session['role'] = user['role']
+
+        if user['role'] in ['organizer', 'admin', 'hod']:
             return redirect(url_for('admin_dashboard'))
-        
+
         if next_page == 'register':
             return redirect(url_for('register'))
 
@@ -134,7 +136,7 @@ def admin_users():
         return redirect(url_for('signin'))
 
     conn = get_db_connection()
-    cursor = conn.cursor(DictCursor)
+    cursor = conn.cursor()
 
     cursor.execute("SELECT name, email, phone FROM users")
     users = cursor.fetchall()
@@ -157,7 +159,7 @@ def admin_analytics():
         return redirect(url_for('signin'))
 
     conn = get_db_connection()
-    cursor = conn.cursor(DictCursor)
+    cursor = conn.cursor()
 
     cursor.execute("""
         SELECT technical_event AS event_name, COUNT(*) AS count
@@ -190,7 +192,7 @@ def admin_events():
         return redirect(url_for('signin'))
 
     conn = get_db_connection()
-    cursor = conn.cursor(DictCursor)
+    cursor = conn.cursor()
 
     cursor.execute("""
         SELECT id, name, category, description, start_date, end_date, event_time,
@@ -261,7 +263,7 @@ def admin_add_event():
     
     data = request.form
     conn = get_db_connection()
-    cursor = conn.cursor(DictCursor)
+    cursor = conn.cursor()
 
     cursor.execute("""
         INSERT INTO events
@@ -472,7 +474,7 @@ def certificate():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('signin'))
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)
