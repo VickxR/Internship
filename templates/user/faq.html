@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block css %}
+<style>
+    .container {
+        width: 85%;
+        margin: 140px auto 60px;
+        padding: 40px;
+        background: rgba(255,255,255,0.7);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .faq-item {
+        margin-bottom: 20px;
+        background: white;
+        padding: 18px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .faq-item:hover {
+        transform: scale(1.01);
+    }
+
+    .faq-item h3 {
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .answer {
+        display: none;
+        margin-top: 10px;
+        color: #444;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <h1>❓ Frequently Asked Questions</h1>
+
+    <div class="faq-item">
+        <h3 onclick="toggle(this)">Who can participate?</h3>
+        <p class="answer">All college students from any department are welcome.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3 onclick="toggle(this)">Is there a registration fee?</h3>
+        <p class="answer">Yes, it depends on the event category.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3 onclick="toggle(this)">Can I join multiple events?</h3>
+        <p class="answer">Yes, as long as timings do not clash.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3 onclick="toggle(this)">Will certificates be provided?</h3>
+        <p class="answer">Yes, all participants receive digital certificates.</p>
+    </div>
+</div>
+
+<script>
+function toggle(el) {
+    const ans = el.nextElementSibling;
+    ans.style.display = ans.style.display === "block" ? "none" : "block";
+}
+</script>
+
+{% endblock %}

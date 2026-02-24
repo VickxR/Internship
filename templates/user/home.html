@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}REC Hacks 3.0{% endblock %}
+
+{% block css %}
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ---------- STAR BACKGROUND ---------- */
+.stars, .stars2, .stars3 {
+    position: fixed;
+    inset: 0;
+    background-repeat: repeat;
+    z-index: 0;
+}
+
+.stars {
+    background:
+        radial-gradient(4px 4px at 20% 30%, white, transparent),
+        radial-gradient(4px 4px at 40% 70%, white, transparent),
+        radial-gradient(4px 4px at 60% 20%, white, transparent),
+        radial-gradient(4px 4px at 80% 90%, white, transparent),
+        radial-gradient(4px 4px at 10% 80%, white, transparent),
+        radial-gradient(4px 4px at 90% 40%, white, transparent);
+    animation: moveStars 60s linear infinite;
+}
+
+.stars2 {
+    background:
+        radial-gradient(5px 5px at 15% 50%, white, transparent),
+        radial-gradient(5px 5px at 35% 10%, white, transparent),
+        radial-gradient(5px 5px at 55% 90%, white, transparent),
+        radial-gradient(5px 5px at 75% 60%, white, transparent);
+    animation: moveStars 120s linear infinite;
+    opacity: 0.5;
+}
+
+.stars3 {
+    background:
+        radial-gradient(5px 5px at 25% 20%, white, transparent),
+        radial-gradient(5px 5px at 65% 40%, white, transparent),
+        radial-gradient(5px 5px at 85% 70%, white, transparent);
+    animation: moveStars 180s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes moveStars {
+    from { transform: translateY(0); }
+    to { transform: translateY(-2000px); }
+}
+
+/* ---------- HERO ---------- */
+.hero {
+    position: relative;
+    color: black;
+    z-index: 10;
+    height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 80px;
+    letter-spacing: 4px;
+}
+
+.hero h1 span {
+    color: #1c38f0;
+}
+
+.date {
+    margin-top: 15px;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+.desc {
+    margin-top: 10px;
+    font-size: 16px;
+    opacity: 0.85;
+}
+
+.buttons {
+    margin-top: 40px;
+}
+
+.btn {
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 0 10px;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.primary {
+    background: white;
+    color: black;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- STAR BACKGROUND -->
+<div class="stars"></div>
+<div class="stars2"></div>
+<div class="stars3"></div>
+
+<section class="hero">
+    <h1>REC Innovate<span> X</span></h1>
+    <p class="date">Febuary 27–28, 2026</p>
+    <p class="desc">Artificial Intelligence & Data Science Dept.</p>
+
+    <div class="buttons">
+        <a href="/register" class="btn primary">Apply Now</a>
+    </div>
+</section>
+
+{% endblock %}

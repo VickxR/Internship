@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Add Event</title>
+
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #A8EDEA, #FED6E3);
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #1E293B;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 140px auto 60px;
+            padding: 30px;
+            background: linear-gradient(135deg, #A8EDEA, #FED6E3);
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 18px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes fadeslide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #000;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input, select, textarea {
+            padding: 12px;
+            background-color: #ffffff;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.25s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #2563EB;
+            box-shadow: 0 0 8px rgba(37, 99, 235, 0.3);
+            transform: scale(1.02);
+        }
+
+        textarea {
+            resize: none;
+            height: 80px;
+        }
+
+        .date-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .date-row input {
+            flex: 1;
+        }
+
+        .time-venue-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .time-venue-row input {
+            flex: 1;
+        }
+
+        .name-category-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .name-category-row input {
+            flex: 1;
+        }
+
+        .entry-team-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .entry-team-row input {
+            flex: 1;
+        }
+
+        .nav-bar {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 15px;
+            padding: 12px 28px;
+            border-radius: 16px;
+            z-index: 9999;
+        }
+
+        .nav-bar a {
+            color: black;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .nav-bar a:hover {
+            background: rgba(255,255,255,0.6);
+        }
+
+        .nav-bar a.active {
+            background: white;
+            color: #2c2ce3;
+        }
+
+        button {
+            padding: 14px;
+            background: linear-gradient(135deg, #A8EDEA, #FED6E3);
+            color: #000;
+            border: black 0.1px solid;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2563EB;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        button:active {
+            transform: scale(0.96);
+        }
+    </style>
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<body>
+
+    <div class="container">
+        
+        <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div id="flashToast"
+                class="toast align-items-center text-bg-{{ category }} border-0 show"
+                role="alert">
+                <div class="d-flex">
+                <div class="toast-body">
+                    {{ message }}
+                </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        </div>
+
+        <div class="nav-bar">
+            <a href="/admin/dashboard" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">Dashboard</a>
+            <a href="/admin/analytics" class="{% if request.endpoint == 'analytics' %}active{% endif %}">Registration details</a>
+            <a href="/admin/users" class="{% if request.endpoint == 'users' %}active{% endif %}">Users</a>
+            <a href="/admin/events" class="{% if request.endpoint == 'events' %}active{% endif %}">Event Management</a>
+            <a href="/admin/event/add" class="{% if request.endpoint == 'add_event' %}active{% endif %}">Add Event</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+
+        <h2>Add New Event</h2>
+
+        <form method="POST" action="/admin/event/add">
+
+            <div class="name-category-row">
+                <input name="name" placeholder="Event Name" required>
+                <select name="category" required>
+                    <option value="">-- Select Category --</option>
+                    <option value="technical">Technical</option>
+                    <option value="non-technical">Non-Technical</option>
+                </select>
+            </div>
+
+            <textarea name="description" placeholder="Event Description" required></textarea>
+
+            <div class="date-row">
+                <input type="date" name="start_date" required>
+                <input type="date" name="end_date" required>
+            </div>
+
+            <div class="time-venue-row">
+                <input type="time" name="event_time" required>
+                <input name="venue" placeholder="Venue">
+            </div>
+            
+            <div class="entry-team-row">
+                <input name="entry_fee" placeholder="Entry Fee">
+                <input name="team_capacity" placeholder="Team Capacity">
+            </div>
+
+            <button type="submit">Add Event</button>
+        </form>
+    </div>
+
+    <script>
+        function confirmAdd(eventId) {
+            if (confirm("Are you sure you want to add this event?")) {
+                window.location.href = "/admin/event/add/" + eventId;
+            }
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("Added") === "1") {
+            alert("Event added successfully");
+
+            // remove ?Added=1 from URL but STAY on same page
+            window.history.replaceState({}, document.title, "/admin/events");
+        }
+    </script>
+
+    <script>
+        const toastEl = document.getElementById("flashToast");
+        if (toastEl) {
+            const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+            toast.show();
+        }
+    </script>
+</body>
+</html>

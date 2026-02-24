@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block css %}
+<style>
+    .container {
+        width: 85%;
+        margin: 140px auto 60px;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        text-align: center;
+    }
+
+    h1 {
+        margin-bottom: 30px;
+    }
+
+    .cards {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+
+    .card {
+        width: 260px;
+        padding: 25px;
+        border-radius: 16px;
+        background: white;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+    }
+
+    .amount {
+        font-size: 26px;
+        font-weight: bold;
+        color: #2c2ce3;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+
+    <h1>🏆 Event Prizes</h1>
+
+    <div class="cards">
+        <div class="card">
+            <h3>🥇 First Prize</h3>
+            <p class="amount">₹15,000</p>
+            <p>Certificate + Trophy + Goodies</p>
+        </div>
+
+        <div class="card">
+            <h3>🥈 Second Prize</h3>
+            <p class="amount">₹10,000</p>
+            <p>Certificate + Medal</p>
+        </div>
+
+        <div class="card">
+            <h3>🥉 Third Prize</h3>
+            <p class="amount">₹5,000</p>
+            <p>Certificate + Goodies</p>
+        </div>
+    </div>
+
+    <p style="margin-top:30px;">
+        *Special awards for Best Innovation & Audience Choice
+    </p>
+</div>
+{% endblock %}

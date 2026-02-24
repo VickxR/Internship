@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}About REC Hacks{% endblock %}
+
+{% block css %}
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #A8EDEA, #FED6E3);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #000000;
+}
+
+.container {
+    max-width: 900px;
+    margin: 140px auto 60px;
+    padding: 40px;
+    background: linear-gradient(135deg, #A8EDEA, #FED6E3);
+    border-radius: 18px;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.12);
+    animation: fadeSlide 1.2s ease;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    color: #000000;
+    text-align: center;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+h2 {
+    color: #000000;
+    margin-top: 35px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+p {
+    font-size: 15px;
+    color: #000000;
+}
+
+.highlight {
+    font-weight: 500;
+}
+
+.divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #000000, transparent);
+    margin: 35px 0;
+}
+
+.back {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.back a {
+    color: #000000;
+    text-decoration: none;
+    padding: 10px 22px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.back a:hover {
+    box-shadow: rgb(137, 244, 244) 0 0 8px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1>About REC Hacks</h1>
+
+    <p>
+        <span class="highlight">REC Hacks</span> is a flagship hackathon initiative organized by
+        <span class="highlight">Rajalakshmi Engineering College (REC), Chennai</span>,
+        with the vision of fostering innovation, creativity, and technical excellence among students.
+    </p>
+
+    <div class="divider"></div>
+
+    <h2>About Rajalakshmi Engineering College</h2>
+    <p>
+        Established in the year <span class="highlight">1997</span>, Rajalakshmi Engineering College
+        is an autonomous institution affiliated to Anna University, Chennai.
+    </p>
+
+    <p>
+        REC offers a wide range of undergraduate and postgraduate programs and is accredited by
+        <span class="highlight">NBA</span> and <span class="highlight">NAAC</span>.
+    </p>
+
+    <div class="divider"></div>
+
+    <h2>Why REC Hacks?</h2>
+    <p>
+        REC Hacks provides a platform where students collaborate, ideate,
+        and develop innovative real-world solutions.
+    </p>
+
+    <div class="divider"></div>
+
+    <h2>Our Vision</h2>
+    <p>
+        To cultivate innovation, curiosity, and collaborative learning
+        while preparing students for global challenges.
+    </p>
+
+    <div class="back">
+        <a href="/">← Back to Home</a>
+    </div>
+
+</div>
+
+{% endblock %}

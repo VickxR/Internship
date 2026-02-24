@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #A8EDEA, #FED6E3);
+            font-family: 'Poppins', sans-serif;
+            color: #355C7D;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .container {
+            width: 80%;
+            margin: 150px auto;
+            padding: 40px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 18px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 220px;
+            padding: 25px;
+            border-radius: 14px;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+       .nav-bar {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 15px;
+            padding: 12px 28px;
+            border-radius: 16px;
+            z-index: 9999;
+        }
+
+        .nav-bar a {
+            color: black;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .nav-bar a:hover {
+            background: rgba(255,255,255,0.6);
+        }
+
+        .nav-bar a.active {
+            background: white;
+            color: #2c2ce3;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="nav-bar">
+        <a href="/admin/dashboard" class="{% if request.endpoint == 'admin_dashboard' %}active{% endif %}">Dashboard</a>
+        <a href="/admin/analytics" class="{% if request.endpoint == 'admin_analytics' %}active{% endif %}">Registration details</a>
+        <a href="/admin/users" class="{% if request.endpoint == 'admin_users' %}active{% endif %}">Users</a>
+        <a href="/admin/events" class="{% if request.endpoint == 'admin_events' %}active{% endif %}">Event Management</a>
+        <a href="/admin/event/add" class="{% if request.endpoint == 'add_event' %}active{% endif %}">Add Event</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <h1>Welcome, Admin 👋</h1>
+    <p>Manage events, view registrations, and monitor analytics from here.</p>
+
+    <div class="cards">
+        <div class="card">
+            <h3>📊 Analytics</h3>
+            <p>View event registration statistics</p>
+        </div>
+
+        <div class="card">
+            <h3>🗂 Events</h3>
+            <p>Manage technical and non-technical events</p>
+        </div>
+
+        <div class="card">
+            <h3>➕ Add Event</h3>
+            <p>Create new events for participants</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

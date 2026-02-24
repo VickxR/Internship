@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Event</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #A8EDEA, #FED6E3);
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pageFade 0.8s ease-in-out;
+        }
+
+        @keyframes pageFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .box {
+            width: 1050%;
+            max-width: 520px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.18);
+            animation: slideUp 0.7s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 55px rgba(0,0,0,0.22);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: #355C7D;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #355C7D;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(53, 92, 125, 0.4);
+            font-family: 'Poppins', sans-serif;
+            transition: border 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #35e6e6;
+            box-shadow: 0 0 0 3px rgba(53, 230, 230, 0.35);
+            transform: scale(1.01);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #355C7D, #6C8CBF);
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(53, 92, 125, 0.35);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 10px rgba(53, 92, 125, 0.25);
+        }
+        
+    .nav-bar {
+        position: fixed;
+        top: 30px;
+        justify-content: center;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 15px;
+        padding: 12px 28px;
+        border-radius: 16px;
+        z-index:9999;
+    }
+
+    .nav-bar a {
+        color: rgb(0, 0, 0);
+        text-decoration: none;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.25s ease;
+        white-space: nowrap;
+    }
+
+    .nav-bar a.active {
+        background: white;
+        color: #2c2ce3;
+    }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <!-- 🔹 NAV BAR -->
+    <div class="nav-bar">
+        <a href="/admin/dashboard" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">Dashboard</a>
+        <a href="/admin/analytics" class="{% if request.endpoint == 'analytics' %}active{% endif %}">Registration details</a>
+        <a href="/admin/users" class="{% if request.endpoint == 'users' %}active{% endif %}">Users</a>
+        <a href="/admin/events" class="{% if request.endpoint == 'events' %}active{% endif %}">Event Management</a>
+        <a href="/admin/event/add" class="{% if request.endpoint == 'add_event' %}active{% endif %}">Add Event</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    <h2>Edit Event</h2>
+
+    <form method="post">
+
+        <label>Event Name</label>
+        <input name="name" value="{{ event.name }}" required>
+
+        <label>Category</label>
+        <select name="category">
+            <option value="technical" {{ 'selected' if event.category=='technical' else '' }}>Technical</option>
+            <option value="non-technical" {{ 'selected' if event.category=='non-technical' else '' }}>Non-Technical</option>
+        </select>
+
+        <label>Description</label>
+        <textarea name="description">{{ event.description }}</textarea>
+
+        <label>Date</label>
+        <input name="event_date" value="{{ event.event_date }}">
+
+        <label>Time</label>
+        <input name="event_time" value="{{ event.event_time }}">
+
+        <label>Venue</label>
+        <input name="venue" value="{{ event.venue }}">
+
+        <label>Entry Fee</label>
+        <input name="entry_fee" value="{{ event.entry_fee }}">
+
+        <label>Team Capacity</label>
+        <input name="team_capacity" value="{{ event.team_capacity }}">
+
+        <button type="submit">Update Event</button>
+    </form>
+</div>
+
+</body>
+</html>

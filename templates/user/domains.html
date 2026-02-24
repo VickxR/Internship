@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}Event Domains{% endblock %}
+
+{% block css %}
+<style>
+    h1, .subtitle {
+        text-align: center;
+        margin-top: 40px;
+        color: #1D4ED8;
+        visibility: hidden;
+    }
+
+    .section {
+        padding: 0 60px 60px;
+    }
+
+    .section-title {
+        font-size: 22px;
+        color: #1D4ED8;
+        margin-bottom: 25px;
+        border-left: 4px solid #1D4ED8;
+        padding-left: 12px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 30px;
+    }
+
+    .card {
+        background: linear-gradient(145deg, #ffffff, #eff6ff);
+        border-radius: 16px;
+        padding: 25px;
+        border: 1px solid #E5E7EB;
+        cursor: pointer;
+        transition: transform .3s;
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 30px rgba(29, 78, 216, 0.35);
+    }
+
+    .card h3 {
+        color: #1D4ED8;
+        margin-bottom: 10px;
+    }
+
+    .card p {
+        font-size: 13px;
+        color: #475569;
+    }
+
+    /* MODAL */
+    .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,.65);
+        backdrop-filter: blur(6px);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background: linear-gradient(145deg, #ffffff, #eff6ff);
+        padding: 30px;
+        border-radius: 16px;
+        width: 420px;
+        border: 1px solid #E5E7EB;
+    }
+
+    .close-btn {
+        float: right;
+        cursor: pointer;
+        color: #1D4ED8;
+        font-size: 18px;
+    }
+
+    .register-btn {
+        display: inline-block;
+        padding: 12px 26px;
+        background: #1D4ED8;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .back {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .back a {
+        color: #3343f4;
+        text-decoration: none;
+        padding: 10px 22px;
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        font-size: 14px;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<h1>Event Domains</h1>
+<p class="subtitle">Explore Technical and Non-Technical events</p>
+
+<!-- TECHNICAL EVENTS -->
+<div class="section">
+    <div class="section-title">Technical Events</div>
+    <div class="grid">
+        {% for event in technical_events %}
+        <div class="card"
+            onclick="openModal(this)"
+            data-name="{{ event.name }}"
+            data-description="{{ event.description }}"
+            data-start_date="{{ event.start_date }}"
+            data-end_date="{{ event.end_date }}"
+            data-time="{{ event.event_time }}"
+            data-venue="{{ event.venue }}"
+            data-fee="{{ event.entry_fee }}"
+            data-team="{{ event.team_capacity }}">
+
+            <h3>{{ event.name }}</h3>
+            <p>{{ event.description[:90] }}...</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- NON-TECHNICAL EVENTS -->
+<div class="section">
+    <div class="section-title">Non-Technical Events</div>
+    <div class="grid">
+        {% for event in non_technical_events %}
+        <div class="card"
+            onclick="openModal(this)"
+            data-name="{{ event.name }}"
+            data-description="{{ event.description }}"
+            data-start_date="{{ event.start_date }}"
+            data-end_date="{{ event.end_date }}"
+            data-time="{{ event.event_time }}"
+            data-venue="{{ event.venue }}"
+            data-fee="{{ event.entry_fee }}"
+            data-team="{{ event.team_capacity }}">
+
+            <h3>{{ event.name }}</h3>
+            <p>{{ event.description[:90] }}...</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- MODAL -->
+<div id="eventModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">✖</span>
+
+        <h3 id="m_name"></h3>
+        <p id="m_description"></p>
+        <p><b>Start Date:</b> <span id="m_start_date"></span></p>
+        <p><b>End Date:</b> <span id="m_end_date"></span></p>
+        <p><b>Time:</b> <span id="m_time"></span></p>
+        <p><b>Venue:</b> <span id="m_venue"></span></p>
+        <p><b>Entry Fee:</b> <span id="m_fee"></span></p>
+        <p><b>Team Capacity:</b> <span id="m_team"></span></p>
+
+        <a href="{{ url_for('signin', next='register')}}" class="register-btn">
+            Register Now
+        </a>
+    </div>
+</div>
+
+<script>
+function openModal(card) {
+    document.getElementById("m_name").innerText = card.dataset.name;
+    document.getElementById("m_description").innerText = card.dataset.description;
+    document.getElementById("m_start_date").innerText = card.dataset.start_date;
+    document.getElementById("m_end_date").innerText = card.dataset.end_date;
+    document.getElementById("m_time").innerText = card.dataset.time;
+    document.getElementById("m_venue").innerText = card.dataset.venue;
+    document.getElementById("m_fee").innerText = card.dataset.fee;
+    document.getElementById("m_team").innerText = card.dataset.team;
+
+    document.getElementById("eventModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("eventModal").style.display = "none";
+}
+</script>
+
+<div class="back">
+    <a href="/">← Back to Home</a>
+</div>
+
+{% endblock %}

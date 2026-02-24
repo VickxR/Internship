@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>{% block title %}REC Hacks{% endblock %}</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #A8EDEA, #FED6E3);
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #000000;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* ---------- HEADER ---------- */
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        /* ---------- LOGO ---------- */
+        .logo {
+            position: absolute;
+            left: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        /* ---------- NAV BAR ---------- */
+        .nav-bar {
+            display: flex;
+            gap: 15px;
+            padding: 12px 28px;
+            border-radius: 16px;
+        }
+
+        .nav-bar a {
+            position: relative;
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.25s ease;
+        }
+
+        .nav-bar a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            height: 2px;
+            width: 0;
+            background: #2c2ce3;
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-bar a:hover::after {
+            width: 100%;
+        }
+
+        .nav-bar a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        }
+
+        .nav-bar a.active {
+            background: white;
+            color: #2c2ce3;
+        }
+    </style>
+
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <!-- LOGO -->
+        <div class="logo">
+            <img src="{{ url_for('static', filename='rec_logo.png') }}" alt="REC Logo">
+        </div>
+
+        <!-- NAVBAR -->
+        <div class="nav-bar">
+            <a href="/" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a>
+            <a href="/about" class="{% if request.endpoint == 'about' %}active{% endif %}">About</a>
+            <a href="/domains" class="{% if request.endpoint == 'domains' %}active{% endif %}">Domains</a>
+            <a href="/prizes" class="{% if request.endpoint == 'prizes' %}active{% endif %}">Prizes</a>
+            <a href="/faq" class="{% if request.endpoint == 'faq' %}active{% endif %}">FAQs</a>
+
+            {% if session.get('user_id') %}
+                <a href="/profile" class="{% if request.endpoint == 'profile' %}active{% endif %}">Profile</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="/signin">Login / Signup</a>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <!-- PAGE CONTENT -->
+    {% block content %}{% endblock %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div id="flashModal" style="
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+">
+    <div style="
+        background: white;
+        padding: 25px 35px;
+        border-radius: 12px;
+        text-align: center;
+    ">
+        <p style="margin-bottom:20px; font-weight:600;">
+            {{ messages[0][1] }}
+        </p>
+
+        <button id="okBtn" style="
+            padding:8px 20px;
+            border:none;
+            border-radius:8px;
+            background:#2c2ce3;
+            color:white;
+            cursor:pointer;
+        ">
+            OK
+        </button>
+    </div>
+</div>
+
+<script>
+document.getElementById("okBtn").addEventListener("click", function () {
+    document.getElementById("flashModal").style.display = "none";
+});
+</script>
+
+{% endif %}
+{% endwith %}
+
+

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Analytics</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+<!-- ✅ Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    body {
+        margin: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #A8EDEA, #FED6E3);
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+        font-family: 'Poppins', sans-serif;
+        color: #355C7D;
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .container {
+        width: 90vw;
+        max-width: 1200px;
+        margin: 140px auto 60px;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 18px;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-family: 'Playfair Display', serif;
+    }
+
+    h3 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .analytics {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+    }
+
+    .chart-box {
+        width: 380px;
+    }
+
+    .footer-text {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 13px;
+        font-family: 'Dancing Script', cursive;
+    }
+
+    .nav-bar {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 15px;
+            padding: 12px 28px;
+            border-radius: 16px;
+            z-index: 9999;
+        }
+
+    .nav-bar a {
+        color: black;
+        text-decoration: none;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .nav-bar a:hover {
+        background: rgba(255,255,255,0.6);
+    }
+
+    .nav-bar a.active {
+        background: white;
+        color: #2c2ce3;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- 🔹 NAV BAR -->
+    <div class="nav-bar">
+        <a href="/admin/dashboard" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">Dashboard</a>
+        <a href="/admin/analytics" class="{% if request.endpoint == 'analytics' %}active{% endif %}">Registration details</a>
+        <a href="/admin/users" class="{% if request.endpoint == 'users' %}active{% endif %}">Users</a>
+        <a href="/admin/events" class="{% if request.endpoint == 'events' %}active{% endif %}">Event Management</a>
+        <a href="/admin/event/add" class="{% if request.endpoint == 'add_event' %}active{% endif %}">Add Event</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+    <h2>Registration Analytics</h2>
+
+    <div class="analytics">
+        <div class="chart-box">
+            <h3>Technical Events</h3>
+            <canvas id="techChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h3>Non-Technical Events</h3>
+            <canvas id="nonTechChart"></canvas>
+        </div>
+    </div>
+
+    <div class="footer-text">
+        Rajalakshmi Engineering College • Admin Portal
+    </div>
+
+</div>
+
+<!-- ================= CHART SCRIPT ================= -->
+<div id="chart-data" style="display:none"
+     data-tech='{{ tech_counts | tojson }}'
+     data-nontech='{{ nontech_counts | tojson }}'></div>
+
+<script>
+    const dataHolder = document.getElementById('chart-data');
+    const techCounts = JSON.parse(dataHolder.dataset.tech || '[]');
+    const nonTechCounts = JSON.parse(dataHolder.dataset.nontech || '[]');
+
+    const techLabels = techCounts.map(e => e.event_name);
+    const techData = techCounts.map(e => e.count);
+
+    const nonTechLabels = nonTechCounts.map(e => e.event_name);
+    const nonTechData = nonTechCounts.map(e => e.count);
+
+    new Chart(document.getElementById('techChart'), {
+        type: 'pie',
+        data: {
+            labels: techLabels,
+            datasets: [{
+                data: techData,
+                backgroundColor: [
+                    '#35e6e6','#6dd5ed','#2193b0','#5ee7df','#b490ca'
+                ]
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('nonTechChart'), {
+        type: 'pie',
+        data: {
+            labels: nonTechLabels,
+            datasets: [{
+                data: nonTechData,
+                backgroundColor: [
+                    '#fbc2eb','#fda085','#ff9a9e','#fad0c4','#f6d365'
+                ]
+            }]
+        }
+    });
+</script>
+
+</body>
+</html>
